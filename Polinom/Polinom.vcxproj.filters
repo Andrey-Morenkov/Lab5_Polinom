@@ -27,7 +27,10 @@
     <ClInclude Include="TLink.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="Polynom.h">
+    <ClInclude Include="THeadList.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TPolynom.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
@@ -35,7 +38,7 @@
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="Polinom.cpp">
+    <ClCompile Include="Polynom.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
