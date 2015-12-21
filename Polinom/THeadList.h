@@ -8,24 +8,27 @@ protected:
 	TLink<T>* pFirst;               // указатель на первый
 	TLink<T>* pLast;                // указатель на последний
 	TLink<T>* pPred;                // указатель на предыдущий
-	TLink<T>* pCurr;                // указатель на следущий
+	TLink<T>* pCurr;        // указатель на следущий
 	TLink<T>* pStop;                // указатель последнего на голову
-	int pos;                        // позиция текущего элемента
+	int pos;                // позиция текущего элемента
 	int len;                        // длина списка
 
 public:
 	THeadList();
+	THeadList(const THeadList& hl);
 	~THeadList();
 
-	void InsFirst(const T elem);    // Вставить первый элемент
-	void InsCurrent(const T elem);  // Вставить текущий элемент
-	void InsLast(const T elem);     // Вставить последний элемент
-	void DelFirst();                // Удалить первый элемент
-	void DelCurrent();              // Удалить текущий элемент
+	THeadList& operator=(const THeadList &hl);
 
-	void Reset();
-	void GoNext();
-	bool IsEnd();
+	void InsFirst(const T& elem);    // Вставить первый элемент
+	void InsCurrent(const T& elem);  // Вставить текущий элемент
+	void InsLast(const T& elem);     // Вставить последний элемент
+	void DelFirst();                 // Удалить первый элемент
+	void DelCurrent();               // Удалить текущий элемент
+
+	void Reset();                    // Установить pCurr на первый элемент
+	void GoNext();                   // Перейти на следующий элемент
+	bool IsEnd();                    // Конец списка?
 
 };
 
@@ -52,16 +55,17 @@ THeadList<T>::~THeadList()
 			pPred = pCurr;
 			pCurr = pCurr->pNext;
 			delete pPred;
+			len--;
 		}
 	}
 	delete pHead;
 }
 
 template <class T>
-void THeadList<T>::InsFirst(const T elem)
+void THeadList<T>::InsFirst(const T& elem)
 {
-	TLink<T>* tmp = new TLink<T>;
-	tmp->Val = elem;
+	TLink<T>* tmp = new TLink<T>(elem);
+	//tmp->Val = elem;
 	pHead->pNext = tmp;
 	if (len == 0)
 	{
@@ -82,19 +86,26 @@ void THeadList<T>::DelFirst()
 {
 	if (len != 0)
 	{
-		pHead->pNext = pFirst->pNext;
-		delete pFirst;
-		pFirst = pHead->pNext;
-		len--;
-		pos--;
+		if (pCurr != pFirst)
+		{
+			pHead->pNext = pFirst->pNext;
+			delete pFirst;
+			pFirst = pHead->pNext;
+			len--;
+			pos--;
+		}
+		else
+		{
+			DelCurrent();
+		}
 	}
 }
 
 template <class T>
-void THeadList<T>::InsCurrent(const T elem)
+void THeadList<T>::InsCurrent(const T& elem)
 {
 	if (pCurr == pFirst)
-		InsFirst(T);
+		InsFirst(elem);
 	else
 	{
 		TLink<T>* tmp = new TLink<T>;
@@ -118,4 +129,69 @@ void THeadList<T>::DelCurrent()
 		pCurr = pPred->pNext;
 		len--;
 	}
+}
+
+template <class T>
+void THeadList<T>::InsLast(const T& elem)
+{
+	if (len != 0)
+	{
+		TLink<T>* tmp = new TLink<T>(elem);
+		pLast->pNext = tmp;
+		tmp->pNext = pStop;
+		pLast = tmp;
+		len++;
+	}
+	else
+	{
+		InsFirst(elem);
+	}
+}
+
+template <class T>
+void THeadList<T>::Reset()
+{
+	pCurr = pFirst;
+	pPred = pHead;
+}
+
+template <class T>
+void THeadList<T>::GoNext()
+{
+	pCurr = pCurr->pNext;
+	pPred = pPred->pNext;
+}
+
+template <class T>
+bool THeadList<T>::IsEnd()
+{
+	if (pCurr == pStop)
+		return true;
+	else
+		return false;
+}
+template <class T>
+THeadList<T>::THeadList(const THeadList& hl)
+{
+	pHead = new TLink<T>;
+	pStop = pHead;
+	pHead->pNext = pStop;
+	pFirst = pLast = pCurr = pPred = NULL;
+	len = 0;
+	pos = 0;
+	for (TLink<T>*p = hl.pFirst; p != hl.pStop; p = p->pNext)
+	{
+		InsLast(p->Val);
+	}
+}
+
+template <class T>
+THeadList& THeadList<T>::operator=(const THeadList &hl)
+{
+	pos = 0;
+	pCurr = NULL;
+	while (len != 0)
+		DelFirst();
+	for (TLink<T>*p = hl.pFirst; p != hl.pStop; p = p->pNext)
+		InsLast(p->Val);
 }
