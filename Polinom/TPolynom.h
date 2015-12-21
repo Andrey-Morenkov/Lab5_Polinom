@@ -26,7 +26,7 @@ public:
 
 	TPolynom & operator +=(TPolynom & p);
 
-	void StrToPoly(const string& str);
+	void StrToPoly(const char* str);
 };
 
 TPolynom & TPolynom::operator += (TPolynom & p)   // прибавление полинома к текущему
@@ -55,6 +55,7 @@ TPolynom & TPolynom::operator += (TPolynom & p)   // прибавление полинома к теку
 		InsLast(p.pCurr->GetVal());
 		p.GoNext();
 	}
+	return *this;
 }
 
 TPolynom operator + (TPolynom & p1,TPolynom & p2)
@@ -65,7 +66,7 @@ TPolynom operator + (TPolynom & p1,TPolynom & p2)
 }
 
 
-void TPolynom::StrToPoly(const string& str)
+void TPolynom::StrToPoly(const char* str)
 {
-
+						
 }

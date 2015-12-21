@@ -8,9 +8,9 @@ protected:
 	TLink<T>* pFirst;               // указатель на первый
 	TLink<T>* pLast;                // указатель на последний
 	TLink<T>* pPred;                // указатель на предыдущий
-	TLink<T>* pCurr;        // указатель на следущий
+	TLink<T>* pCurr;                // указатель на следущий
 	TLink<T>* pStop;                // указатель последнего на голову
-	int pos;                // позиция текущего элемента
+	int pos;                        // позиция текущего элемента
 	int len;                        // длина списка
 
 public:
@@ -25,7 +25,6 @@ public:
 	void InsLast(const T& elem);     // Вставить последний элемент
 	void DelFirst();                 // Удалить первый элемент
 	void DelCurrent();               // Удалить текущий элемент
-
 	void Reset();                    // Установить pCurr на первый элемент
 	void GoNext();                   // Перейти на следующий элемент
 	bool IsEnd();                    // Конец списка?
@@ -186,7 +185,7 @@ THeadList<T>::THeadList(const THeadList& hl)
 }
 
 template <class T>
-THeadList& THeadList<T>::operator=(const THeadList &hl)
+THeadList<T>& THeadList<T>::operator=(const THeadList& hl)
 {
 	pos = 0;
 	pCurr = NULL;
