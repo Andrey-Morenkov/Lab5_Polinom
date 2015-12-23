@@ -1,5 +1,6 @@
 #include "THeadList.h"
 #include <string>
+#include <conio.h>
 #include <iostream>
 
 using namespace std;
@@ -26,7 +27,8 @@ public:
 
 	TPolynom & operator +=(TPolynom & p);
 
-	void StrToPoly(const char* str);
+	void InsPoly_v1();
+	void OutPoly_v1();
 };
 
 TPolynom & TPolynom::operator += (TPolynom & p)   // прибавление полинома к текущему
@@ -66,7 +68,32 @@ TPolynom operator + (TPolynom & p1,TPolynom & p2)
 }
 
 
-void TPolynom::StrToPoly(const char* str)
+void TPolynom::InsPoly_v1()
 {
-						
+	Monom monom;
+	char tmp1=NULL;
+	while (tmp1 != 'x')
+	{
+		cout << "Введи коэфф" << endl;
+		cin >> monom.coeff;
+		cout << "Введи тип звена" << endl;
+		cin >> monom.type;
+		InsLast(monom);
+		cout << "Введи x для завершения" << endl;
+		cin >> tmp1;
+	}
+}
+
+void TPolynom::OutPoly_v1()
+{
+	int len1 = len;
+	Reset();
+	while (len1 != 0)
+	{
+		cout << "Type: " << pCurr->GetVal().type << endl;
+		cout << "Coeff: " << pCurr->GetVal().coeff << endl;
+		cout << "---" << endl;
+		pCurr = pCurr->pNext;
+		len1--;
+	}
 }

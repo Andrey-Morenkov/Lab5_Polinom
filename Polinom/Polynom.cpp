@@ -17,8 +17,9 @@ int _tmain(int argc, _TCHAR* argv[])
 
 	TLink<int> a;
 	THeadList<int> b;
-	TPolynom c;
-
+	TPolynom p1;
+	p1.InsPoly_v1();
+	p1.OutPoly_v1();
 	return 0;
 }
 

@@ -2,8 +2,9 @@ template <class T>
 class TLink
 {
 public:
-	T Val;          // «начение
-	TLink* pNext;   // ”казатель на след элемент
+	T Val;                                 // «начение
+	TLink* pNext;                          // ”казатель на след элемент
+
 	explicit TLink(const T& _Val = T());
 	TLink(const TLink& L);
 	~TLink();
@@ -12,10 +13,10 @@ public:
 };
 
 template <class T>
-TLink<T>::TLink(const T& _Val)
+TLink<T>::TLink(const T& _Val) 
 {
 	Val = _Val;
-	pNext = NULL;             // шаблон по умолчанию - "пустой" полином
+	pNext = NULL;                           // шаблон по умолчанию - "пустой" полином
 }
 
 template <class T>
@@ -28,5 +29,4 @@ TLink<T>::TLink(const TLink& L)
 template <class T>
 TLink<T>::~TLink()
 {
-	delete pNext;
 }

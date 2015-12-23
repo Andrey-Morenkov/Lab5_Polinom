@@ -19,6 +19,7 @@ public:
 	~THeadList();
 
 	THeadList& operator=(const THeadList &hl);
+	bool operator==(const THeadList &hl);
 
 	void InsFirst(const T& elem);    // Вставить первый элемент
 	void InsCurrent(const T& elem);  // Вставить текущий элемент
@@ -64,7 +65,6 @@ template <class T>
 void THeadList<T>::InsFirst(const T& elem)
 {
 	TLink<T>* tmp = new TLink<T>(elem);
-	//tmp->Val = elem;
 	pHead->pNext = tmp;
 	if (len == 0)
 	{
@@ -76,8 +76,8 @@ void THeadList<T>::InsFirst(const T& elem)
 		tmp->pNext = pFirst;
 		pFirst = tmp;
 	}
-	len++;
 	pos++;
+	len++;
 }
 
 template <class T>
@@ -95,7 +95,11 @@ void THeadList<T>::DelFirst()
 		}
 		else
 		{
-			DelCurrent();
+			pHead->pNext = pFirst->pNext;
+			delete pFirst;
+			delete pCurr;
+			pFirst = pCurr = pHead->pNext;
+			len--;
 		}
 	}
 }
@@ -104,11 +108,13 @@ template <class T>
 void THeadList<T>::InsCurrent(const T& elem)
 {
 	if (pCurr == pFirst)
+	{
 		InsFirst(elem);
+		pPred = pFirst;
+	}
 	else
 	{
-		TLink<T>* tmp = new TLink<T>;
-		tmp->Val = elem;
+		TLink<T>* tmp = new TLink<T>(elem);
 		pPred->pNext = tmp;
 		tmp->pNext = pCurr;
 		pCurr = tmp;
@@ -152,6 +158,7 @@ void THeadList<T>::Reset()
 {
 	pCurr = pFirst;
 	pPred = pHead;
+	pos = 0;
 }
 
 template <class T>
@@ -159,6 +166,7 @@ void THeadList<T>::GoNext()
 {
 	pCurr = pCurr->pNext;
 	pPred = pPred->pNext;
+	pos++;
 }
 
 template <class T>
@@ -193,4 +201,25 @@ THeadList<T>& THeadList<T>::operator=(const THeadList& hl)
 		DelFirst();
 	for (TLink<T>*p = hl.pFirst; p != hl.pStop; p = p->pNext)
 		InsLast(p->Val);
+	return *this;
 }
+
+/*template <class T>
+bool THeadList<T>::operator==(const THeadList &hl)
+{
+	if (len != hl.len)
+		return false;
+	else
+	{
+		TLink<T>*p1 = pFirst;
+		for (TLink<T>*p = hl.pFirst; p != hl.pStop; p = p->pNext)
+		if (p->GetVal != p1->GetVal)
+			return false;
+		else
+		{
+			GoNext();
+			hl.GoNext();
+		}
+		return true;
+	}
+}*/
