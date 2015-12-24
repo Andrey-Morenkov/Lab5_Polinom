@@ -92,8 +92,11 @@ void TPolynom::InsPoly()
 		cout << "Z:";
 		cin >> z;
 		monom.type = 100 * x + 10 * y + z;
-		TPolynom p = monom;
-		(*this) += p;
+		if (monom.coeff != 0)
+		{
+			TPolynom p = monom;
+			(*this) += p;
+		}
 		cout << "Завершить ввод? y/n" << endl;
 		cin >> tmp1;
 		i++;
