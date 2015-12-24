@@ -27,9 +27,14 @@ public:
 
 	TPolynom & operator +=(TPolynom & p);
 
-	void InsPoly_v1();
-	void OutPoly_v1();
+	void InsPoly();
+	void OutPoly();
 };
+TPolynom::TPolynom(const Monom& m)
+{
+	InsLast(m);
+}
+
 
 TPolynom & TPolynom::operator += (TPolynom & p)   // прибавление полинома к текущему
 {
@@ -50,6 +55,7 @@ TPolynom & TPolynom::operator += (TPolynom & p)   // прибавление полинома к теку
 				pCurr->GetVal().coeff += p.pCurr->GetVal().coeff;
 				if (pCurr->GetVal().coeff == 0)
 					DelCurrent();
+				p.GoNext();
 			}
 	}
 	while (!p.IsEnd())
@@ -68,32 +74,47 @@ TPolynom operator + (TPolynom & p1,TPolynom & p2)
 }
 
 
-void TPolynom::InsPoly_v1()
+void TPolynom::InsPoly()
 {
 	Monom monom;
+	int x, y, z, i = 1;
 	char tmp1=NULL;
-	while (tmp1 != 'x')
+	while (tmp1 != 'y')
 	{
-		cout << "Введи коэфф" << endl;
+		cout << "Моном #" << i << endl;
+		cout << "Введи коэффицент" << endl;
 		cin >> monom.coeff;
-		cout << "Введи тип звена" << endl;
-		cin >> monom.type;
-		InsLast(monom);
-		cout << "Введи x для завершения" << endl;
+		cout << "Введи тип звена:" << endl;
+		cout << "X:";
+		cin >> x;
+		cout << "Y:";
+		cin >> y;
+		cout << "Z:";
+		cin >> z;
+		monom.type = 100 * x + 10 * y + z;
+		TPolynom p = monom;
+		(*this) += p;
+		cout << "Завершить ввод? y/n" << endl;
 		cin >> tmp1;
+		i++;
 	}
 }
 
-void TPolynom::OutPoly_v1()
+void TPolynom::OutPoly()
 {
 	int len1 = len;
+	int x, y, z;
 	Reset();
+	if (len1 == 0)
+		cout << "0" << endl;
 	while (len1 != 0)
 	{
-		cout << "Type: " << pCurr->GetVal().type << endl;
-		cout << "Coeff: " << pCurr->GetVal().coeff << endl;
-		cout << "---" << endl;
-		pCurr = pCurr->pNext;
+		x = pCurr->GetVal().type / 100;
+		y = pCurr->GetVal().type % 100 / 10;
+		z = pCurr->GetVal().type % 100 % 10;
+		cout <<pCurr->GetVal().coeff<<"( x^"<<x<<"y^"<<y<<"z^"<<z<<") ";
+		GoNext();
 		len1--;
 	}
+	cout << endl;
 }

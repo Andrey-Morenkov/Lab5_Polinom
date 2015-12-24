@@ -97,8 +97,7 @@ void THeadList<T>::DelFirst()
 		{
 			pHead->pNext = pFirst->pNext;
 			delete pFirst;
-			delete pCurr;
-			pFirst = pCurr = pHead->pNext;
+			pCurr = pFirst = pHead->pNext;
 			len--;
 		}
 	}
@@ -156,7 +155,7 @@ void THeadList<T>::InsLast(const T& elem)
 template <class T>
 void THeadList<T>::Reset()
 {
-	pCurr = pFirst;
+	pCurr = pHead->pNext;
 	pPred = pHead;
 	pos = 0;
 }

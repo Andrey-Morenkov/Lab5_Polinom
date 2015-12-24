@@ -15,11 +15,28 @@ int _tmain(int argc, _TCHAR* argv[])
 {
 	setlocale(LC_ALL, "Russian");
 
+	// Test compiling
 	TLink<int> a;
 	THeadList<int> b;
-	TPolynom p1;
-	p1.InsPoly_v1();
-	p1.OutPoly_v1();
+	TPolynom P,Q;
+	// Test compiling
+
+	cout << "Полином P" << endl;
+	P.InsPoly();
+	system("cls");
+	cout << "Полином Q" << endl;
+	Q.InsPoly();
+	system("cls");
+	cout << "P: ";
+	P.OutPoly();
+	cout << endl;
+	cout << "Q: ";
+	Q.OutPoly();
+	cout << endl;
+	P += Q;
+	cout << "P+Q: ";
+	P.OutPoly();
+
 	return 0;
 }
 
